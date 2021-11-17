@@ -7,7 +7,7 @@ typedef enum {
 	CC
 } Cmd;
 
-void generate(Cmd cmd, char* result, char* cmdArg) {
+void generate(Cmd cmd, char* result, char* cmdArg, char* output) {
 	switch (cmd) {
 		case ECHO: {
 			strcat(result, "echo ");
@@ -17,6 +17,9 @@ void generate(Cmd cmd, char* result, char* cmdArg) {
 		case CC: {
 			strcat(result, "cc ");
 			strcat(result, cmdArg);
+			strcat(result, " -o ");
+			strcat(result, output);
+			strcat(result, "\n");
 			break;
 		}
 	}
@@ -26,9 +29,9 @@ void generateBuild() {
 	FILE* fp;
 	fp = fopen("build.sh", "w+");
 	char* result = (char*) malloc(sizeof(char) * 1);
-	generate(ECHO, result, "===== Building ====\n");
-	generate(CC, result, "main.c\n");
-	generate(ECHO, result, "Built successfully!\n");
+	generate(ECHO, result, "===== Building ====\n", NULL);
+	generate(CC, result, "main.c", "ez");
+	generate(ECHO, result, "Built successfully!\n", NULL);
 	fputs(result, fp);
 	fclose(fp);
 	printf("Successfully generated build!\n");

@@ -1,3 +1,3 @@
 echo ===== Building ====
-cc main.c
+cc main.c -o ez
 echo Built successfully!
