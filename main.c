@@ -1,29 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-typedef enum {
-	ECHO,
-	CC
-} Cmd;
-
-void generate(Cmd cmd, char* result, char* cmdArg, char* output) {
-	switch (cmd) {
-		case ECHO: {
-			strcat(result, "echo ");
-			strcat(result, cmdArg);
-			break;
-		}
-		case CC: {
-			strcat(result, "cc ");
-			strcat(result, cmdArg);
-			strcat(result, " -o ");
-			strcat(result, output);
-			strcat(result, "\n");
-			break;
-		}
-	}
-}
+#include "include/ez.c"
 
 void generateBuild() {
 	FILE* fp;
@@ -34,6 +12,7 @@ void generateBuild() {
 	generate(ECHO, result, "Built successfully!\n", NULL);
 	fputs(result, fp);
 	fclose(fp);
+	free(result);
 	printf("Successfully generated build!\n");
 }
 
