@@ -18,9 +18,26 @@ void generate(Cmd cmd, char* result, char* cmdArg, char* output) {
 			strcat(result, "cc ");
 			strcat(result, cmdArg);
 			strcat(result, " -o ");
+			if (output == NULL) {
+				output = cmdArg;
+			}
+
 			strcat(result, output);
 			strcat(result, "\n");
 			break;
 		}
 	}
+}
+
+void generateBuild(char* result, char* out) {
+	if (out == NULL) {
+		out = "build.sh";
+	}
+
+	FILE* fp;
+	fp = fopen(out, "w+");
+	fputs(result, fp);
+	fclose(fp);
+	free(result);
+	printf("Successfully generated build!\n");
 }
